@@ -37,6 +37,9 @@ dependencies:
   pull_to_refresh: ^2.0.0
   toast: ^0.3.0
   http: ^1.1.2
+  flutter_svg: ^2.1.0
+  numberpicker: ^2.1.2
+  sunmi_scanner: ^0.0.6
   flutter:
     sdk: flutter
 

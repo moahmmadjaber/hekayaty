@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hekayaty/presentation/app_resources/color_manager.dart';
 
@@ -12,13 +13,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(debugShowCheckedModeBanner: false,
       localizationsDelegates: [
+        // CupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: [
-        Locale("ar", "IQ"), // OR Locale('ar', 'AE') OR Other RTL locales
+        Locale("ar", "SA"), // OR Locale('ar', 'AE') OR Other RTL locales
       ],
-      locale: Locale("ar", "IQ"), // OR
+      locale: Locale("ar", "SA"), // OR
       title: 'Flutter Demo',
       theme: ThemeData(fontFamily: 'dinn',
 
@@ -26,7 +28,4 @@ class MyApp extends StatelessWidget {
       ),onGenerateRoute: RouteGenerator.getRoute,initialRoute: Routes.loginPage,
     );
   }
-}
-
-class GlobalCupertinoLocalizations {
 }

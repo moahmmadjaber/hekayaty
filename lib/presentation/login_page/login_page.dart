@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hekayaty/business_logic/login/login_cubit.dart';
 import 'package:hekayaty/presentation/app_resources/color_manager.dart';
 
+import '../app_resources/route_manger.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -54,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){Navigator.pushNamed(context, Routes.homePage);},
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(60),backgroundColor: MyColor.colorPrimary,foregroundColor: MyColor.colorWhite,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
                   ),

@@ -1,42 +1,24 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:hekayaty/app/icons.dart';
+import 'package:hekayaty/business_logic/home/home_cubit.dart';
+import 'package:hekayaty/presentation/app_resources/color_manager.dart';
 import 'package:sunmi_printer_plus/core/enums/enums.dart';
 import 'package:sunmi_printer_plus/core/helpers/sunmi_helper.dart';
 import 'package:sunmi_printer_plus/core/sunmi/sunmi_config.dart';
 import 'package:sunmi_printer_plus/core/sunmi/sunmi_printer.dart';
 
+import '../app_resources/route_manger.dart';
+
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -45,74 +27,121 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
+    return BlocListener<HomeCubit, HomeState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      child: Scaffold(
+        backgroundColor: MyColor.lowGray,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: MyColor.colorPrimary,
+          title: Text('الرئيسية', style: TextStyle(color: MyColor.colorWhite)),
+        ),
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+          children: [
+            SizedBox(
+              width: 200,
+              height: 100,
+              child: CurvedButton(
+                text: "التذاكر",icon:AppIcons.tickets ,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50),
+                ),
+                color: MyColor.colorPrimary, onTap: () { Navigator.pushNamed(context, Routes.ticketsPage); },
+              ),
             ),
+            SizedBox(height: 20),
+            GridView.count(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              childAspectRatio: 1.5,
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              children: [
+                // Top Button
+                CurvedButton(
+                  text: "قرطاسية",icon:AppIcons.schoolSupply ,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(50),
+                  ),
+                  color: MyColor.colorGreen, onTap: () { Navigator.pushNamed(context, Routes.schoolSupply); },
+                ),
+                // Bottom Button
+                CurvedButton(
+                  text: "مطعم",icon:AppIcons.restaurant ,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
+                  ),
+                  color: MyColor.primaryGold, onTap: () {  },
+                ),
+                // Left Button
+                CurvedButton(
+                  text: "كافتريا",icon:AppIcons.cafeteria ,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(50),
+                    bottomRight: Radius.circular(50),
+                  ),
+                  color: MyColor.colorBlack, onTap: () {  },
+                ),
+                // Right Button
+                CurvedButton(
+                  text: 'مسبح',icon:AppIcons.swimmingPool ,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    bottomLeft: Radius.circular(50),
+                  ),
+                  color: MyColor.colorOrange, onTap: () {  },
+                ),
+                // Center Button
+              ],
+            ),
+          ],
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+    );
+  }
+}
+
+class CurvedButton extends StatelessWidget {
+  final String text;
+  final BorderRadius borderRadius;
+  final Color color;
+  final String icon; 
+  final void Function() onTap;
+
+  const CurvedButton({
+    Key? key,
+    required this.text,
+    required this.borderRadius,
+    required this.color, required this.icon, required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(onTap: onTap,borderRadius: BorderRadius.circular(10),
+      child: Container(
+        margin: EdgeInsets.all(10),
+        width: 100,
+        height: 50,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(10),border: Border.all(color: MyColor.lowGray),
+          boxShadow: [BoxShadow(color: MyColor.colorBlack2, blurRadius: 5)],
+        ),
+        alignment: Alignment.center,
+        child: Row(mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(text, style: TextStyle(color: Colors.white)),
+            SizedBox(width: 10,),
+            SvgPicture.string(icon,height: 30,fit: BoxFit.fitHeight,color: MyColor.colorWhite,)
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final assetImage =
-          await SunmiHelper.getImageFromAsset(
-              'assets/images/black_icon.png');
-
-          //
-          //       await SunmiPrinter.printText('هلوات');
-          // await SunmiPrinter.printText('هلوات',
-          //     style: SunmiTextStyle(
-          //       bold: true,
-          //       align: SunmiPrintAlign.CENTER,
-          //     ));
-          //
-          // await SunmiPrinter.lineWrap(2); // Jump 2 lines
-          // await SunmiPrinter.printText('هلوات',
-          //     style: SunmiTextStyle(
-          //       fontSize: 80,
-          //     ));
-          //
-          // await SunmiPrinter.printText("هلو",
-          //     style: SunmiTextStyle(
-          //       fontSize: 32,
-          //     ));
-
-          await SunmiPrinter.printImage(
-              assetImage,align: SunmiPrintAlign.RIGHT); },
-        // PRINT A QR},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
