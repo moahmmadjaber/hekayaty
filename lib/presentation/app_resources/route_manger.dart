@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hekayaty/business_logic/home/home_cubit.dart';
 import 'package:hekayaty/business_logic/login/login_cubit.dart';
+import 'package:hekayaty/business_logic/restaurant/restaurant_cubit.dart';
 import 'package:hekayaty/business_logic/school_supply/school_supply_cubit.dart';
 import 'package:hekayaty/business_logic/tickets/tickets_cubit.dart';
+import 'package:hekayaty/presentation/cafeteria/cafeteria_page.dart';
+import 'package:hekayaty/presentation/restaurant_page/restaurant_page.dart';
 
 import '../../app/di.dart';
+import '../../business_logic/cafeteria/cafeteria_cubit.dart';
 import '../home_page/home_page.dart';
 import '../login_page/login_page.dart';
 import '../school_suply/school_suply.dart';
@@ -14,10 +18,12 @@ import '../tickets_page/tickets_page.dart';
 
 
 class Routes{
-  static const loginPage='login_page';
-  static const homePage='home_page';
-  static const ticketsPage='tickets_page';
-  static const schoolSupply='school_supply';
+  static const loginPage='/login_page';
+  static const homePage='/home_page';
+  static const ticketsPage='/tickets_page';
+  static const schoolSupply='/school_supply';
+  static const cafeteria='/cafeteria';
+  static const restaurant='/restaurant';
 }
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings){
@@ -53,6 +59,22 @@ class RouteGenerator {
             builder: (context) => BlocProvider(
               create: (_) => instance<SchoolSupplyCubit>(),
               child: instance<SchoolSupply>(),
+            ));
+      case Routes.cafeteria:
+        initCafeteria();
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (context) => BlocProvider(
+              create: (_) => instance<CafeteriaCubit>(),
+              child: instance<CafeteriaPage>(),
+            ));
+      case Routes.restaurant:
+        initRestaurant();
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (context) => BlocProvider(
+              create: (_) => instance<RestaurantCubit>(),
+              child: instance<RestaurantPage>(),
             ));
 
     default: return MaterialPageRoute(

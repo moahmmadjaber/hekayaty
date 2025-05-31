@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 
-class SchoolSupplyModel{
+class ReceiptModel{
   int id;
   TextEditingController name;
   TextEditingController count;
   TextEditingController price;
   ValueNotifier<String> total;
 
-  SchoolSupplyModel({required this.id,required  this.name,required  this.count,required  this.price,required
+  ReceiptModel({required this.id,required  this.name,required  this.count,required  this.price,required
   this.total});
 
 }

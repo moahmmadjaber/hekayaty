@@ -40,6 +40,9 @@ dependencies:
   flutter_svg: ^2.1.0
   numberpicker: ^2.1.2
   sunmi_scanner: ^0.0.6
+  screenshot: ^3.0.0
+  gal: ^2.3.1
+
   flutter:
     sdk: flutter
 
@@ -102,4 +105,5 @@ flutter:
   assets:
     - assets/images/black_icon.png
     - assets/fonts/dinn.otf
+    - assets/images/hakayety_title.png
 

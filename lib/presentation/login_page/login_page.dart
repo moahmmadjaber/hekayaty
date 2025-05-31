@@ -33,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Image.asset('assets/images/hakayety_title.png',width: 200,fit: BoxFit.fitWidth,),
                 const Text(
                   'تسجيل الدخول',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

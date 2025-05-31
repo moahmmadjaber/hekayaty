@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50),
                   ),
-                  color: MyColor.primaryGold, onTap: () {  },
+                  color: MyColor.primaryGold, onTap: () { Navigator.pushNamed(context, Routes.restaurant); },
                 ),
                 // Left Button
                 CurvedButton(
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     topRight: Radius.circular(50),
                     bottomRight: Radius.circular(50),
                   ),
-                  color: MyColor.colorBlack, onTap: () {  },
+                  color: MyColor.colorBlack, onTap: () { Navigator.pushNamed(context, Routes.cafeteria);  },
                 ),
                 // Right Button
                 CurvedButton(

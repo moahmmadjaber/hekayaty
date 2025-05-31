@@ -3,12 +3,11 @@ import 'package:sunmi_printer_plus/core/enums/enums.dart';
 import 'package:sunmi_printer_plus/core/helpers/sunmi_helper.dart';
 import 'package:sunmi_printer_plus/core/styles/sunmi_text_style.dart';
 import 'package:sunmi_printer_plus/core/sunmi/sunmi_printer.dart';
-import 'package:sunmi_printer_plus/sunmi_printer_plus.dart';
 
 import '../../../data/model/school_supply_model/school_supply_model.dart';
 
-class SchoolSupplyPrinter {
-  static Future<void> printSchoolSupplyInvoice(List<ReceiptModel> items) async {
+class RestaurantPrinter {
+  static Future<void> printRestaurantPrinterInvoice(List<ReceiptModel> items) async {
     try {
       Uint8List byte = await SunmiHelper.getImageFromAsset(
         'assets/images/hakayety_title.png',
@@ -22,7 +21,7 @@ class SchoolSupplyPrinter {
       await SunmiPrinter.setAlignment(SunmiPrintAlign.RIGHT);
       await SunmiPrinter.setAlignment(SunmiPrintAlign.RIGHT);
       await SunmiPrinter.printText(
-        '********* فاتورة قرطاسية *********',
+        '********* فاتورة المطعم *********',
         style: SunmiTextStyle(align: SunmiPrintAlign.CENTER,bold: true),
       );
       await SunmiPrinter.printText(

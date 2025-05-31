@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       ],
       locale: Locale("ar", "SA"), // OR
       title: 'Flutter Demo',
-      theme: ThemeData(fontFamily: 'dinn',
+      theme: ThemeData(fontFamily: 'dinn',scaffoldBackgroundColor: MyColor.lowGray,appBarTheme: AppBarTheme(centerTitle: true,iconTheme: IconThemeData(color: MyColor.colorWhite),backgroundColor: MyColor.colorPrimary),
 
         colorScheme: ColorScheme.fromSeed(seedColor: MyColor.colorPrimary),
       ),onGenerateRoute: RouteGenerator.getRoute,initialRoute: Routes.loginPage,
