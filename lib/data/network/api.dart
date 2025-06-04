@@ -20,7 +20,7 @@ class Api {
   async {
     try {
       if(kDebugMode)
-      print(router);
+      print(baseUrl+router);
       HttpClient client = HttpClient();
       client.connectionTimeout = Duration(seconds: timeout);
       client.badCertificateCallback =
@@ -33,20 +33,24 @@ class Api {
       }
       request.headers.set('Content-Type', 'application/json; charset=utf-8');
       if (sendToken) {
-        // request.headers.set('Authorization', 'Bearer ${await pref.getSharedItem(SharedEnum.token)}');
+        request.headers.set('Authorization', 'Bearer ${await pref.getToken()}');
       }else{
         String username = 'mustafa';
         String password = 'password';
         String basicAuth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
         request.headers.set('Authorization', basicAuth);
+        request.headers.chunkedTransferEncoding = true;
       }
       if (body != null) {
         request.add(utf8.encode(jsonEncode(body)));
       }
       HttpClientResponse result = await request.close().timeout(Duration(seconds: timeout));
-      if (result.statusCode == 200) {
+      if (result.statusCode == 200||result.statusCode == 201) {
+
         return await result.transform(utf8.decoder).join();
       } else {
+        if(kDebugMode)
+          print(result.statusCode .toString());
 
           // FirebaseCrashlytics.instance.recordFlutterFatalError(FlutterErrorDetails(exception: await result.transform(utf8.decoder).join()));
         throw await result.transform(utf8.decoder).join();
@@ -63,15 +67,17 @@ class Api {
     }
   }
   Future<String> callNoTokenApi(dynamic body, String router,
-      {sendToken = true, timeout = 60})
+      {sendToken = true, timeout = 60,bool postNoData=false})
   async {
     try {
+      if(kDebugMode)
+        print(baseUrl+router);
       HttpClient client = HttpClient();
       client.connectionTimeout = Duration(seconds: timeout);
       client.badCertificateCallback =
       ((X509Certificate cert, String host, int port) => true);
       HttpClientRequest request;
-      if (body == null) {
+      if (body == null||postNoData) {
         request = await client.getUrl(Uri.parse(baseUrl + router));
       } else {
         request = await client.postUrl(Uri.parse(baseUrl + router));
@@ -79,27 +85,31 @@ class Api {
 
       request.headers.set('Content-Type', 'application/json; charset=utf-8');
 
-        String username = 'mustafa';
-        String password = 'password';
-        String basicAuth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
-        request.headers.set('Authorization', basicAuth);
-
+        // String username = 'ayn';
+        // String password = 'password';
+        // String basicAuth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+        // request.headers.set('Authorization', basicAuth);
+        // print(basicAuth);
+        print(body);
       if (body != null) {
         request.add(utf8.encode(jsonEncode(body)));
       }
       HttpClientResponse result = await request.close().timeout(Duration(seconds: timeout));
+
       if (result.statusCode == 200) {
-        return await result.transform(utf8.decoder).join();
+        final responseBody = await result.transform(utf8.decoder).join();
+        return responseBody;
       } else {
-        throw await result.transform(utf8.decoder).join();
+        print(result.statusCode );
+        final errorBody = await result.transform(utf8.decoder).join();
+        print(errorBody);
+        throw errorBody;
       }
     } catch (ex) {
       // FirebaseCrashlytics.instance.recordFlutterFatalError(FlutterErrorDetails(exception: ex.toString()));
-      var error = json.decode(ex.toString());
-      throw ErrorModel(
-          status: error['statusCode'],
-          message: error['message']
-      );
+      var error = ex.toString();
+      print(ex);
+      throw ex.toString();
     }
   }
   Future<dynamic> callFormData(Map<String, String> body,

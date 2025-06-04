@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_loadingindicator/flutter_loadingindicator.dart';
 import 'package:hekayaty/presentation/app_resources/color_manager.dart';
 
 import '../presentation/app_resources/route_manger.dart';
@@ -21,11 +22,12 @@ class MyApp extends StatelessWidget {
         Locale("ar", "SA"), // OR Locale('ar', 'AE') OR Other RTL locales
       ],
       locale: Locale("ar", "SA"), // OR
+      builder: EasyLoading.init(),
       title: 'Flutter Demo',
       theme: ThemeData(fontFamily: 'dinn',scaffoldBackgroundColor: MyColor.lowGray,appBarTheme: AppBarTheme(centerTitle: true,iconTheme: IconThemeData(color: MyColor.colorWhite),backgroundColor: MyColor.colorPrimary),
 
         colorScheme: ColorScheme.fromSeed(seedColor: MyColor.colorPrimary),
-      ),onGenerateRoute: RouteGenerator.getRoute,initialRoute: Routes.loginPage,
+      ),onGenerateRoute: RouteGenerator.getRoute,initialRoute: Routes.splash,
     );
   }
 }

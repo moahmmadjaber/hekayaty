@@ -102,7 +102,7 @@ extension FormatDate on DateTime? {
       return isLeft?'unknown':'غير معرف';
     }else {
       final DateFormat formatter = DateFormat('yyyy/MM/dd','en-us');
-      return formatter.format(this!.add(Duration(hours: 3)));
+      return formatter.format(this!);
     }
   }
   String toYear() {
@@ -110,7 +110,7 @@ extension FormatDate on DateTime? {
       return isLeft?'unknown':'غير معرف';
     }else {
       final DateFormat formatter = DateFormat('yyyy','en-us');
-      return formatter.format(this!.add(Duration(hours: 3)));
+      return formatter.format(this!);
     }
   }
   String toDateName() {
@@ -118,7 +118,7 @@ extension FormatDate on DateTime? {
       return isLeft?'unknown':'غير معرف';
     }else {
       final DateFormat formatter = DateFormat('yyyy-MM-dd','en-us');
-      return formatter.format(this!.add(Duration(hours: 3)));
+      return formatter.format(this!);
     }
   }
   String toTime() {
@@ -126,7 +126,7 @@ extension FormatDate on DateTime? {
       return isLeft?'unknown':'غير معرف';
     }else {
       final DateFormat formatter = DateFormat('hh:mma','en_us');
-      return formatter.format(this!.add(Duration(hours: 3)));
+      return formatter.format(this!);
     }
   }
   String toCallTime() {
@@ -139,8 +139,16 @@ extension FormatDate on DateTime? {
   }
 
 }
-extension ColorX on Color {
-  String toHexTriplet() => '#${(value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
+class HexColor extends Color {
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    return int.parse(hexColor, radix: 16);
+  }
+
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
 extension durationString on Duration{
   String toTime(){
