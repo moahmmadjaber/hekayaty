@@ -7,7 +7,6 @@ import 'package:hekayaty/app/icons.dart';
 import 'package:hekayaty/business_logic/school_supply/school_supply_cubit.dart';
 import 'package:hekayaty/data/model/categories_model/categories_model.dart';
 import 'package:hekayaty/presentation/app_resources/color_manager.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 import '../../data/model/school_supply_model/school_supply_model.dart';
 import '../app_resources/barcode_scanner.dart';
@@ -141,31 +140,17 @@ class _SchoolSupplyState extends State<SchoolSupply> {
               child: InkWell(
                 onTap: () async {
 
-                 String? data=await SimpleBarcodeScanner.scanBarcode(
+                  final result = await Navigator.push(
                     context,
-                    barcodeAppBar: const BarcodeAppBar(
-                      appBarTitle: "الرمز الشريطي",
-                      centerTitle: true,
-                      enableBackButton: true,
-                      backButtonIcon: Icon(Icons.arrow_back_ios),
+                    MaterialPageRoute(
+
+                      builder: (_) => const BarcodeScannerPage(),
                     ),
-                    isShowFlashIcon: true,
-                    delayMillis: 2000,
                   );
-                 if(data!=null) {
-                   bloc.getSubCategory(data);
-                 }
-                  // final result = await Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //
-                  //     builder: (_) => const BarcodeScannerPage(),
-                  //   ),
-                  // );
-                  //
-                  // if (result != null) {
-                  //
-                  // }
+
+                  if (result != null) {
+                    bloc.getSubCategory(result);
+                  }
                 },
                 child: Container(
                   width: double.maxFinite,
